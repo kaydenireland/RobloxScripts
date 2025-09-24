@@ -8,3 +8,17 @@ game.Players.PlayerAdded:Connect(function(player)
 	deaths.Value = 0
 	deaths.Parent = playerStats
 end)
+
+
+game.Players.PlayerAdded:Connect(function(player)
+		player.CharacterAdded:Connect(function(character)
+			local humanoid = character:WaitForChild("Humanoid")
+			humanoid.Died:Connect(function()
+				-- Increase the death counter
+				local deaths = player:FindFirstChild("leaderstats"):FindFirstChild("Deaths")
+				if deaths then
+					deaths.Value += 1
+				end
+			end)
+		end)
+	end)
