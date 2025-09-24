@@ -58,8 +58,25 @@ local function initializeCheckpoint(checkpoint: Instance)
 			-- Cannot switch checkpoints if the player is dead
 			return
 		end
+		
+		-- Gets the checkpoint number and the player's current level
+		local checkpointNumber = checkpoint:FindFirstChild("LevelNumber")
+		local levelStat = player:FindFirstChild("leaderstats") and player.leaderstats:FindFirstChild("Level")
+		
+		-- If the checkpoint number is higher than the player's current level, update the player's level
+		print(checkpointNumber.Value)
+		print(levelStat.Value)
+		print("Checking ifs")
+		if checkpointNumber and levelStat then
+			print("completed first")
+			if checkpointNumber.Value + 1 > levelStat.Value then
+				print("completed second")
+				levelStat.Value = checkpointNumber.Value + 1
+				lastCheckpointByPlayer[player] = checkpoint
+			end
+		end
 
-		lastCheckpointByPlayer[player] = checkpoint
+		
 	end
 
 	checkpoint.Touched:Connect(onCheckpointTouched)
